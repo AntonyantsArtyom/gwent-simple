@@ -11,8 +11,3 @@ export interface Board {
   player: Record<RowType, Card[]>;
   opponent: Record<RowType, Card[]>;
 }
-
-export interface Board {
-  player: Record<RowType, Card[]>;
-  opponent: Record<RowType, Card[]>;
-}

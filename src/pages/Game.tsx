@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import type { Board as BoardType, Card as CardType, RowType } from "../type";
-import { playCardInRoom, resetRoom, type PlayerSide } from "../api/roomApi";
+import { playCardInRoom, resetRoom, joinRoom, type PlayerSide } from "../api/roomApi";
 import { useRoomPolling } from "../api/useRoomPolling";
 import { mapRoomToBoard } from "../api/mapRoomToBoard";
 import { Board } from "../components/Board/Board";
@@ -65,6 +65,7 @@ export function Game() {
 
   const [hand, setHand] = useState<CardType[]>(initialCards);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [hasJoined, setHasJoined] = useState(false);
 
   const selectedCard = hand.find((card) => card.id === selectedCardId) ?? null;
 
@@ -73,6 +74,13 @@ export function Game() {
 
     return mapRoomToBoard(room, side);
   }, [room, side]);
+
+  useEffect(() => {
+    if (!hasJoined && room) {
+      joinRoom(roomId, side).catch(console.error);
+      setHasJoined(true);
+    }
+  }, [room, roomId, side, hasJoined]);
 
   const handleCardClick = (card: CardType) => {
     setSelectedCardId(card.id);
@@ -138,7 +146,7 @@ export function Game() {
         }}
       >
         <div>
-          Room: {roomId} | Side: {side}
+          Room: {roomId} | Side: {side} | Players: {room?.players ? (room.players.player1 ? 1 : 0) + (room.players.player2 ? 1 : 0) : 0}/2
         </div>
 
         <button

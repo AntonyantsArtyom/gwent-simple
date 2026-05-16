@@ -25,6 +25,10 @@ export function getOrCreateRoom(roomId: number): Room {
     },
     createdAt: Date.now(),
     updatedAt: Date.now(),
+    players: {
+      player1: false,
+      player2: false,
+    },
   };
 
   rooms.set(roomId, room);
@@ -48,7 +52,10 @@ export function resetRoom(roomId: number): Room {
     player1: createEmptyBoard(),
     player2: createEmptyBoard(),
   };
-
+  room.players = {
+    player1: false,
+    player2: false,
+  };
   room.updatedAt = Date.now();
 
   return room;
@@ -56,6 +63,27 @@ export function resetRoom(roomId: number): Room {
 
 export function getAllRooms(): Room[] {
   return Array.from(rooms.values());
+}
+
+export function joinRoom(roomId: number, side: PlayerSide): Room {
+  const room = getOrCreateRoom(roomId);
+  room.players[side] = true;
+  room.updatedAt = Date.now();
+  return room;
+}
+
+export function leaveRoom(roomId: number, side: PlayerSide): Room {
+  const room = getOrCreateRoom(roomId);
+  room.players[side] = false;
+  room.updatedAt = Date.now();
+  return room;
+}
+
+export function getPlayersCountInRoom(room: Room): number {
+  let count = 0;
+  if (room.players.player1) count++;
+  if (room.players.player2) count++;
+  return count;
 }
 
 for (let i = 0; i < 10; i++) {

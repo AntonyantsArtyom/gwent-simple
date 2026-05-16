@@ -9,6 +9,10 @@ export interface Room {
   board: Record<PlayerSide, PlayerBoard>;
   createdAt: number;
   updatedAt: number;
+  players: {
+    player1: boolean;
+    player2: boolean;
+  };
 }
 
 const API_URL = "http://localhost:3001/api";
@@ -59,6 +63,22 @@ export async function resetRoom(roomId: number): Promise<Room> {
 
   if (!response.ok) {
     throw new Error("Failed to reset room");
+  }
+
+  return response.json();
+}
+
+export async function joinRoom(roomId: number, side: PlayerSide): Promise<Room> {
+  const response = await fetch(`${API_URL}/rooms/${roomId}/join`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ side }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to join room");
   }
 
   return response.json();

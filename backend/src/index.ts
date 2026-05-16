@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getAllRooms, getOrCreateRoom, playCard, resetRoom } from "./rooms.store.js";
+import { getAllRooms, getOrCreateRoom, playCard, resetRoom, joinRoom, leaveRoom, getPlayersCountInRoom } from "./rooms.store.js";
 import type { Card, PlayerSide } from "./types.js";
 
 const app = express();
@@ -32,9 +32,14 @@ function isValidCard(card: unknown): card is Card {
 app.get("/api/rooms", (req, res) => {
   const rooms = getAllRooms();
 
+  const roomsWithStats = rooms.map((room) => ({
+    ...room,
+    playersCount: getPlayersCountInRoom(room),
+  }));
+
   res.json({
-    total: rooms.length,
-    rooms: rooms,
+    total: roomsWithStats.length,
+    rooms: roomsWithStats,
   });
 });
 
@@ -49,8 +54,66 @@ app.get("/api/rooms/:roomId", (req, res) => {
   }
 
   const room = getOrCreateRoom(roomId);
+  const roomWithStats = {
+    ...room,
+    playersCount: getPlayersCountInRoom(room),
+  };
 
-  res.json(room);
+  res.json(roomWithStats);
+});
+
+app.post("/api/rooms/:roomId/join", (req, res) => {
+  const roomId = Number(req.params.roomId);
+  const body = req.body as { side?: unknown };
+
+  if (!isValidRoomId(roomId)) {
+    res.status(400).json({
+      message: "Invalid room id",
+    });
+    return;
+  }
+
+  if (!isValidSide(body.side)) {
+    res.status(400).json({
+      message: "Invalid side",
+    });
+    return;
+  }
+
+  const room = joinRoom(roomId, body.side);
+  const roomWithStats = {
+    ...room,
+    playersCount: getPlayersCountInRoom(room),
+  };
+
+  res.json(roomWithStats);
+});
+
+app.post("/api/rooms/:roomId/leave", (req, res) => {
+  const roomId = Number(req.params.roomId);
+  const body = req.body as { side?: unknown };
+
+  if (!isValidRoomId(roomId)) {
+    res.status(400).json({
+      message: "Invalid room id",
+    });
+    return;
+  }
+
+  if (!isValidSide(body.side)) {
+    res.status(400).json({
+      message: "Invalid side",
+    });
+    return;
+  }
+
+  const room = leaveRoom(roomId, body.side);
+  const roomWithStats = {
+    ...room,
+    playersCount: getPlayersCountInRoom(room),
+  };
+
+  res.json(roomWithStats);
 });
 
 app.post("/api/rooms/:roomId/cards", (req, res) => {

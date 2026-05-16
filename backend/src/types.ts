@@ -16,4 +16,8 @@ export interface Room {
   board: Record<PlayerSide, PlayerBoard>;
   createdAt: number;
   updatedAt: number;
+  players: {
+    player1: boolean;
+    player2: boolean;
+  };
 }
