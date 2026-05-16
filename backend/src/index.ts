@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getOrCreateRoom, playCard, resetRoom } from "./rooms.store.js";
+import { getAllRooms, getOrCreateRoom, playCard, resetRoom } from "./rooms.store.js";
 import type { Card, PlayerSide } from "./types.js";
 
 const app = express();
@@ -28,6 +28,15 @@ function isValidCard(card: unknown): card is Card {
 
   return typeof value.id === "string" && typeof value.name === "string" && typeof value.power === "number" && ["melee", "ranged", "siege"].includes(value.row);
 }
+
+app.get("/api/rooms", (req, res) => {
+  const rooms = getAllRooms();
+
+  res.json({
+    total: rooms.length,
+    rooms: rooms,
+  });
+});
 
 app.get("/api/rooms/:roomId", (req, res) => {
   const roomId = Number(req.params.roomId);

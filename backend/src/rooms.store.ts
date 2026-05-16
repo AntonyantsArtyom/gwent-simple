@@ -53,3 +53,11 @@ export function resetRoom(roomId: number): Room {
 
   return room;
 }
+
+export function getAllRooms(): Room[] {
+  return Array.from(rooms.values());
+}
+
+for (let i = 0; i < 10; i++) {
+  getOrCreateRoom(i);
+}

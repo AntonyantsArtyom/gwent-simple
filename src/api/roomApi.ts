@@ -23,6 +23,16 @@ export async function getRoom(roomId: number): Promise<Room> {
   return response.json();
 }
 
+export async function getAllRooms(): Promise<{ total: number; rooms: Room[] }> {
+  const response = await fetch(`${API_URL}/rooms`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch all rooms");
+  }
+
+  return response.json();
+}
+
 export async function playCardInRoom(params: { roomId: number; side: PlayerSide; card: Card }): Promise<Room> {
   const response = await fetch(`${API_URL}/rooms/${params.roomId}/cards`, {
     method: "POST",
