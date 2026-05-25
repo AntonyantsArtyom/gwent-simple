@@ -8,15 +8,11 @@ import indexContent2 from "../assets/content/IndexContent2.png";
 import discordIcon from "../assets/home/DiscordIconCircled.svg";
 import telegramIcon from "../assets/home/TelegramIconCircled.svg";
 import vkIcon from "../assets/home/VKIconCircled.svg";
-import { Header } from "../shared/header/Header";
 
 export const Home = () => {
-  return <Header />;
-
   return (
     <>
       <div className="grid-container">
-        <Header />
         <div className="main">
           <div className="content">
             <img src={pattern1} alt="Pattern 1" />

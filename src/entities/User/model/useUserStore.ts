@@ -14,7 +14,7 @@ interface UserState {
   login: (login: string, password: string) => Promise<void>;
   register: (login: string, password: string) => Promise<void>;
   logout: () => void;
-  checkAuth: () => Promise<void>;
+  auth: () => Promise<void>;
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -54,18 +54,14 @@ export const useUserStore = create<UserState>((set, get) => ({
     set({ user: null, token: null });
   },
 
-  checkAuth: async () => {
-    const token = get().token;
-    if (!token) return;
-
+  auth: async (): Promise<void> => {
     set({ isLoading: true });
     try {
       const { data } = await api.get("/auth/me", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${get().token}` },
       });
       set({ user: data.user, isLoading: false });
     } catch (error) {
-      localStorage.removeItem("token");
       set({ user: null, token: null, isLoading: false });
     }
   },
