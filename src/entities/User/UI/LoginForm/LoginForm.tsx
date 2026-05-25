@@ -50,7 +50,7 @@ export const LoginForm = () => {
           <button type="submit" disabled={userStore.isLoading}>
             {userStore.isLoading ? "Загрузка..." : "войти"}
           </button>
-          <p onClick={() => navigate("/register")}>нет аккаунта</p>
+          <p onClick={() => navigate("/registration")}>нет аккаунта</p>
         </div>
       </form>
       <img className="line" src={line} alt="line" />

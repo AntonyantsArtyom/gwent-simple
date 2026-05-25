@@ -24,13 +24,10 @@ export const Rooms = () => {
   }, []);
 
   const getSideForRoom = (room: Room): "player1" | "player2" | null => {
-    const player1Joined = room.players?.player1 || false;
-    const player2Joined = room.players?.player2 || false;
-
-    if (!player1Joined) {
+    if (!room.players.player1) {
       return "player1";
     }
-    if (!player2Joined) {
+    if (!room.players.player2) {
       return "player2";
     }
     return null;
@@ -45,8 +42,8 @@ export const Rooms = () => {
       <img className="roomsImage" src={roomsImage} />
       <div className="rooms">
         {rooms.map((room) => {
-          const player1Joined = room.players?.player1 || false;
-          const player2Joined = room.players?.player2 || false;
+          const player1Joined = !!room.players.player1;
+          const player2Joined = !!room.players.player2;
           const playersCount = (player1Joined ? 1 : 0) + (player2Joined ? 1 : 0);
           const isFull = playersCount === 2;
           const side = getSideForRoom(room);

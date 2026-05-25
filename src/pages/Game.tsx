@@ -1,10 +1,11 @@
 import { useMemo, useState, useEffect } from "react";
 import type { Board as BoardType, Card as CardType, RowType } from "../type";
-import { playCardInRoom, resetRoom, joinRoom, type PlayerSide } from "../api/roomApi";
+import { playCardInRoom, resetRoom, joinRoom, leaveRoom, type PlayerSide } from "../api/roomApi";
 import { useRoomPolling } from "../api/useRoomPolling";
 import { mapRoomToBoard } from "../api/mapRoomToBoard";
 import { Board } from "../components/Board/Board";
 import { Hand } from "../components/Hand/Hand";
+import { useNavigate } from "react-router-dom";
 
 const initialCards: CardType[] = [
   {
@@ -60,6 +61,7 @@ function getSideFromUrl(): PlayerSide {
 export function Game() {
   const roomId = getRoomIdFromUrl();
   const side = getSideFromUrl();
+  const navigate = useNavigate();
 
   const { room, isLoading } = useRoomPolling(roomId);
 
@@ -81,6 +83,16 @@ export function Game() {
       setHasJoined(true);
     }
   }, [room, roomId, side, hasJoined]);
+
+  useEffect(() => {
+    return () => {
+      if (hasJoined) {
+        leaveRoom(roomId, side).catch(console.error);
+      }
+    };
+  }, [roomId, side, hasJoined]);
+
+  const playersCount = room?.players ? (room.players.player1 ? 1 : 0) + (room.players.player2 ? 1 : 0) : 0;
 
   const handleCardClick = (card: CardType) => {
     setSelectedCardId(card.id);
@@ -106,6 +118,12 @@ export function Game() {
 
     setHand(initialCards);
     setSelectedCardId(null);
+  };
+
+  const handleLeaveRoom = async () => {
+    await leaveRoom(roomId, side);
+    setHasJoined(false);
+    navigate("/rooms");
   };
 
   if (isLoading || !board) {
@@ -146,23 +164,40 @@ export function Game() {
         }}
       >
         <div>
-          Room: {roomId} | Side: {side} | Players: {room?.players ? (room.players.player1 ? 1 : 0) + (room.players.player2 ? 1 : 0) : 0}/2
+          Room: {roomId} | Side: {side} | Players: {playersCount}/2
         </div>
 
-        <button
-          type="button"
-          onClick={handleResetRoom}
-          style={{
-            padding: "8px 12px",
-            borderRadius: 6,
-            border: "1px solid #8b6f3e",
-            background: "#2b2118",
-            color: "#f5ddb0",
-            cursor: "pointer",
-          }}
-        >
-          Reset room
-        </button>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button
+            type="button"
+            onClick={handleResetRoom}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 6,
+              border: "1px solid #8b6f3e",
+              background: "#2b2118",
+              color: "#f5ddb0",
+              cursor: "pointer",
+            }}
+          >
+            Reset room
+          </button>
+
+          <button
+            type="button"
+            onClick={handleLeaveRoom}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 6,
+              border: "1px solid #8b6f3e",
+              background: "#2b2118",
+              color: "#f5ddb0",
+              cursor: "pointer",
+            }}
+          >
+            Leave room
+          </button>
+        </div>
       </div>
 
       <Board board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />

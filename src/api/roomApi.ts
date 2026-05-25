@@ -10,12 +10,21 @@ export interface Room {
   createdAt: number;
   updatedAt: number;
   players: {
-    player1: boolean;
-    player2: boolean;
+    player1: string | null;
+    player2: string | null;
   };
 }
 
 const API_URL = "http://localhost:3001/api";
+
+function getToken(): string | null {
+  return localStorage.getItem("token");
+}
+
+function authHeaders(): Record<string, string> {
+  const token = getToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 export async function getRoom(roomId: number): Promise<Room> {
   const response = await fetch(`${API_URL}/rooms/${roomId}`);
@@ -42,6 +51,7 @@ export async function playCardInRoom(params: { roomId: number; side: PlayerSide;
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...authHeaders(),
     },
     body: JSON.stringify({
       side: params.side,
@@ -59,6 +69,7 @@ export async function playCardInRoom(params: { roomId: number; side: PlayerSide;
 export async function resetRoom(roomId: number): Promise<Room> {
   const response = await fetch(`${API_URL}/rooms/${roomId}/reset`, {
     method: "POST",
+    headers: authHeaders(),
   });
 
   if (!response.ok) {
@@ -73,12 +84,30 @@ export async function joinRoom(roomId: number, side: PlayerSide): Promise<Room> 
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...authHeaders(),
     },
     body: JSON.stringify({ side }),
   });
 
   if (!response.ok) {
     throw new Error("Failed to join room");
+  }
+
+  return response.json();
+}
+
+export async function leaveRoom(roomId: number, side: PlayerSide): Promise<Room> {
+  const response = await fetch(`${API_URL}/rooms/${roomId}/leave`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+    body: JSON.stringify({ side }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to leave room");
   }
 
   return response.json();
