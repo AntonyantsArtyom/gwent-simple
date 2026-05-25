@@ -11,6 +11,12 @@ export interface Card {
 
 export type PlayerBoard = Record<RowType, Card[]>;
 
+export interface RoundResult {
+  winner: PlayerSide | "draw";
+  player1Power: number;
+  player2Power: number;
+}
+
 export interface Room {
   id: number;
   board: Record<PlayerSide, PlayerBoard>;
@@ -20,4 +26,15 @@ export interface Room {
     player1: string | null;
     player2: string | null;
   };
+  passed: {
+    player1: boolean;
+    player2: boolean;
+  };
+  rounds: RoundResult[];
+  score: {
+    player1: number;
+    player2: number;
+  };
+  winner: PlayerSide | null;
+  gameOver: boolean;
 }

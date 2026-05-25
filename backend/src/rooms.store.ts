@@ -1,4 +1,5 @@
 import type { Card, PlayerBoard, PlayerSide, Room } from "./types.js";
+import { addWin, addLoss } from "./auth.store.js";
 
 const rooms = new Map<number, Room>();
 
@@ -10,14 +11,8 @@ function createEmptyBoard(): PlayerBoard {
   };
 }
 
-export function getOrCreateRoom(roomId: number): Room {
-  const existingRoom = rooms.get(roomId);
-
-  if (existingRoom) {
-    return existingRoom;
-  }
-
-  const room: Room = {
+function createEmptyRoom(roomId: number): Room {
+  return {
     id: roomId,
     board: {
       player1: createEmptyBoard(),
@@ -29,8 +24,80 @@ export function getOrCreateRoom(roomId: number): Room {
       player1: null,
       player2: null,
     },
+    passed: {
+      player1: false,
+      player2: false,
+    },
+    rounds: [],
+    score: {
+      player1: 0,
+      player2: 0,
+    },
+    winner: null,
+    gameOver: false,
   };
+}
 
+function calculateTotalPower(board: PlayerBoard): number {
+  return [...board.melee, ...board.ranged, ...board.siege].reduce((sum, card) => sum + card.power, 0);
+}
+
+function resolveRound(room: Room): void {
+  const player1Power = calculateTotalPower(room.board.player1);
+  const player2Power = calculateTotalPower(room.board.player2);
+
+  let winner: PlayerSide | "draw";
+
+  if (player1Power > player2Power) {
+    winner = "player1";
+    room.score.player1++;
+  } else if (player2Power > player1Power) {
+    winner = "player2";
+    room.score.player2++;
+  } else {
+    winner = "draw";
+  }
+
+  room.rounds.push({
+    winner,
+    player1Power,
+    player2Power,
+  });
+
+  if (room.score.player1 >= 2) {
+    room.winner = "player1";
+    room.gameOver = true;
+
+    if (room.players.player1) addWin(room.players.player1);
+    if (room.players.player2) addLoss(room.players.player2);
+  } else if (room.score.player2 >= 2) {
+    room.winner = "player2";
+    room.gameOver = true;
+
+    if (room.players.player2) addWin(room.players.player2);
+    if (room.players.player1) addLoss(room.players.player1);
+  } else {
+    room.board = {
+      player1: createEmptyBoard(),
+      player2: createEmptyBoard(),
+    };
+    room.passed = {
+      player1: false,
+      player2: false,
+    };
+  }
+
+  room.updatedAt = Date.now();
+}
+
+export function getOrCreateRoom(roomId: number): Room {
+  const existingRoom = rooms.get(roomId);
+
+  if (existingRoom) {
+    return existingRoom;
+  }
+
+  const room = createEmptyRoom(roomId);
   rooms.set(roomId, room);
   return room;
 }
@@ -42,18 +109,24 @@ export function playCard(params: { roomId: number; side: PlayerSide; card: Card 
   return room;
 }
 
+export function pass(roomId: number, side: PlayerSide): Room {
+  const room = getOrCreateRoom(roomId);
+  room.passed[side] = true;
+  room.updatedAt = Date.now();
+
+  if (room.passed.player1 && room.passed.player2) {
+    resolveRound(room);
+  }
+
+  return room;
+}
+
 export function resetRoom(roomId: number): Room {
   const room = getOrCreateRoom(roomId);
-  room.board = {
-    player1: createEmptyBoard(),
-    player2: createEmptyBoard(),
-  };
-  room.players = {
-    player1: null,
-    player2: null,
-  };
-  room.updatedAt = Date.now();
-  return room;
+  const newRoom = createEmptyRoom(roomId);
+
+  rooms.set(roomId, newRoom);
+  return newRoom;
 }
 
 export function getAllRooms(): Room[] {
@@ -99,6 +172,16 @@ export function getPlayersCountInRoom(room: Room): number {
 export function canPlayCard(roomId: number, side: PlayerSide, userId: string): boolean {
   const room = rooms.get(roomId);
   if (!room) return false;
+  if (room.gameOver) return false;
+  if (room.passed[side]) return false;
+  return room.players[side] === userId;
+}
+
+export function canPass(roomId: number, side: PlayerSide, userId: string): boolean {
+  const room = rooms.get(roomId);
+  if (!room) return false;
+  if (room.gameOver) return false;
+  if (room.passed[side]) return false;
   return room.players[side] === userId;
 }
 

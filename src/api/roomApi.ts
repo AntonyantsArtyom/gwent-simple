@@ -13,6 +13,21 @@ export interface Room {
     player1: string | null;
     player2: string | null;
   };
+  passed: {
+    player1: boolean;
+    player2: boolean;
+  };
+  rounds: {
+    winner: PlayerSide | "draw";
+    player1Power: number;
+    player2Power: number;
+  }[];
+  score: {
+    player1: number;
+    player2: number;
+  };
+  winner: PlayerSide | null;
+  gameOver: boolean;
 }
 
 const API_URL = "http://localhost:3001/api";
@@ -108,6 +123,23 @@ export async function leaveRoom(roomId: number, side: PlayerSide): Promise<Room>
 
   if (!response.ok) {
     throw new Error("Failed to leave room");
+  }
+
+  return response.json();
+}
+
+export async function passInRoom(roomId: number, side: PlayerSide): Promise<Room> {
+  const response = await fetch(`${API_URL}/rooms/${roomId}/pass`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+    body: JSON.stringify({ side }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to pass");
   }
 
   return response.json();

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { getAllRooms, getOrCreateRoom, playCard, resetRoom, joinRoom, leaveRoom, getPlayersCountInRoom, canPlayCard } from "./rooms.store.js";
-import { createUser, findUserByCredentials } from "./auth.store.js";
+import { getAllRooms, getOrCreateRoom, playCard, resetRoom, joinRoom, leaveRoom, getPlayersCountInRoom, canPlayCard, canPass, pass } from "./rooms.store.js";
+import { createUser, findUserByCredentials, getUserStats } from "./auth.store.js";
 import { generateToken, authMiddleware, AuthRequest } from "./auth.middleware.js";
 import type { Card, PlayerSide } from "./types.js";
 
@@ -51,6 +51,9 @@ app.post("/api/auth/register", async (req, res) => {
       user: {
         id: user.id,
         login: user.login,
+        wins: user.wins,
+        losses: user.losses,
+        draws: user.draws,
       },
       token,
     });
@@ -81,6 +84,9 @@ app.post("/api/auth/login", async (req, res) => {
       user: {
         id: user.id,
         login: user.login,
+        wins: user.wins,
+        losses: user.losses,
+        draws: user.draws,
       },
       token,
     });
@@ -96,6 +102,17 @@ app.get("/api/auth/me", authMiddleware, (req: AuthRequest, res) => {
       login: req.userLogin,
     },
   });
+});
+
+app.get("/api/auth/stats", authMiddleware, (req: AuthRequest, res) => {
+  const stats = getUserStats(req.userId!);
+
+  if (!stats) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
+
+  res.json(stats);
 });
 
 app.get("/api/rooms", (req, res) => {
@@ -220,6 +237,33 @@ app.post("/api/rooms/:roomId/cards", authMiddleware, (req: AuthRequest, res) => 
       card: body.card,
     });
 
+    res.json(room);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.post("/api/rooms/:roomId/pass", authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const roomId = Number(req.params.roomId);
+    const body = req.body as { side?: unknown };
+
+    if (!isValidRoomId(roomId)) {
+      res.status(400).json({ message: "Invalid room id" });
+      return;
+    }
+
+    if (!isValidSide(body.side)) {
+      res.status(400).json({ message: "Invalid side" });
+      return;
+    }
+
+    if (!canPass(roomId, body.side, req.userId!)) {
+      res.status(403).json({ message: "You cannot pass right now" });
+      return;
+    }
+
+    const room = pass(roomId, body.side);
     res.json(room);
   } catch (error: any) {
     res.status(400).json({ message: error.message });

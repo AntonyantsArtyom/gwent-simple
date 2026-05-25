@@ -4,6 +4,9 @@ export interface User {
   id: string;
   login: string;
   passwordHash: string;
+  wins: number;
+  losses: number;
+  draws: number;
   createdAt: number;
 }
 
@@ -21,6 +24,9 @@ export async function createUser(login: string, password: string): Promise<User>
     id: crypto.randomUUID(),
     login,
     passwordHash,
+    wins: 0,
+    losses: 0,
+    draws: 0,
     createdAt: Date.now(),
   };
 
@@ -46,6 +52,34 @@ export function getUserByLogin(login: string): User | undefined {
 
 export function getUserById(id: string): User | undefined {
   return Array.from(users.values()).find((user) => user.id === id);
+}
+
+export function addWin(userId: string): void {
+  const user = getUserById(userId);
+  if (user) user.wins++;
+}
+
+export function addLoss(userId: string): void {
+  const user = getUserById(userId);
+  if (user) user.losses++;
+}
+
+export function addDraw(userId: string): void {
+  const user = getUserById(userId);
+  if (user) user.draws++;
+}
+
+export function getUserStats(userId: string) {
+  const user = getUserById(userId);
+  if (!user) return null;
+
+  return {
+    login: user.login,
+    wins: user.wins,
+    losses: user.losses,
+    draws: user.draws,
+    total: user.wins + user.losses + user.draws,
+  };
 }
 
 (async () => {
