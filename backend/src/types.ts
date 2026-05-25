@@ -17,7 +17,7 @@ export interface Room {
   createdAt: number;
   updatedAt: number;
   players: {
-    player1: boolean;
-    player2: boolean;
+    player1: string | null;
+    player2: string | null;
   };
 }
