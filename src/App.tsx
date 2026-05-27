@@ -21,13 +21,14 @@ export function App() {
       <div className="gridContainer">
         <Header />
         <Routes>
-          <Route path="/home" element={<><Home /><Footer /></>} />
+          <Route path="/home" element={<Home />} />
           <Route path="/game/:id" element={<Game />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/home" replace />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

@@ -6,52 +6,53 @@ import telegramIcon from "../../assets/home/TelegramIconCircled.svg";
 import youtubeIcon from "../../assets/home/YoutubeIconCircled.svg";
 import vkIcon from "../../assets/home/VKIconCircled.svg";
 import maxIcon from "../../assets/home/NoMaxIcon.svg";
+import { Link } from 'react-router-dom';
 
 function FooterComponent() {
   return (
-    <footer className={styles.footer}>
+        <footer className={styles.footer}>
             <div className={styles.footerPattern}>
-                <img src={pattern1}></img>
+                <img src={pattern1} />
             </div>
             <div className={styles.footerGwentLogo}>
-                <a href="index.html"><img src={gwentLogo}></img></a>
+                <Link to="/"><img src={gwentLogo} /></Link>
             </div>
             <div className={styles.footerMail}> 
-                <a className="content-text-rubick">GwentTournament@mail.ru</a>
+                <p className="content-text-rubick">GwentTournament@mail.ru</p>
             </div>
             <div className={styles.footerSocials}>
-                <a href="#" className={styles.iconImg}><img src={discordIcon}></img></a>
-                <a href="#" className={styles.iconImg}><img src={telegramIcon}></img></a>
-                <a href="#" className={styles.iconImg}><img src={youtubeIcon}></img></a>
-                <a href="#" className={styles.iconImg}><img src={vkIcon}></img></a>
-                <a href="fifth_social.html" className={styles.iconImg}><img src={maxIcon}></img></a>
+                <a href="" className={styles.iconImg}><img src={discordIcon} /></a>
+                <a href="" className={styles.iconImg}><img src={telegramIcon} /></a>
+                <a href="" className={styles.iconImg}><img src={youtubeIcon} /></a>
+                <a href="" className={styles.iconImg}><img src={vkIcon} /></a>
+                <Link to="/not-ready" className={styles.iconImg}><img src={maxIcon} /></Link>
             </div>
             <div className={styles.footerLinks}> 
                 <div className={styles.footerColumn}>
                     <p>Сайт</p>
-                    <a href="#" className="content-text-rubick">Соревнования</a>
-                    <a href="#" className="content-text-rubick">Новости</a>
+                    <Link to="/not-ready" className="content-text-rubick">Соревнования</Link>
+                    <Link to="/not-ready" className="content-text-rubick">Новости</Link>
                  </div>
                   <div className={styles.footerColumn}>
                     <p>Услуги</p>
-                    <a href="#" className="content-text-rubick">Мерч</a>
-                    <a href="#" className="content-text-rubick">Билеты</a>
+                    <Link to="/not-ready" className="content-text-rubick">Мерч</Link>
+                    <Link to="/not-ready" className="content-text-rubick">Билеты</Link>
                 </div>
                 <div className={styles.footerColumn}>
                     <p>Компания</p>
-                    <a href="#" className="content-text-rubick">Соревнование</a>
-                    <a href="#" className="content-text-rubick">Новости</a>
+                    <Link to="/not-ready" className="content-text-rubick">Соревнование</Link>
+                    <Link to="/not-ready" className="content-text-rubick">Новости</Link>
                 </div>
                 <div className={styles.footerColumn}>
                     <p>Остальное</p>
-                    <a href="#" className="content-text-rubick">Форум</a>
-                    <a href="#" className="content-text-rubick">Тех. Поддержка</a>
+                    <Link to="/not-ready" className="content-text-rubick">Форум</Link>
+                    <Link to="/not-ready" className="content-text-rubick">Тех. Поддержка</Link>
                 </div>
             </div>
             <div className={styles.footerAgreements}>
-                <a href="#" className="content-text-rubick">Соглашение</a>
-                <a href="#" className="content-text-rubick">Конфиденциальность</a>
-                <a href="#" className="content-text-rubick">Правила форума</a>
+                <Link to="/not-ready" className="content-text-rubick">Соглашение</Link>
+                <Link to="/not-ready" className="content-text-rubick">Конфиденциальность</Link>
+                <Link to="/not-ready" className="content-text-rubick">Правила форума</Link>
             </div>
             <div className={styles.footerYear}> 
                 <p className="content-text-rubick" style={{ '--color': '#19A976' } as React.CSSProperties}>2026</p>
