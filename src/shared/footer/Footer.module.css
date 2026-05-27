@@ -1,0 +1,61 @@
+footer {
+    grid-area: footer;
+    display: grid;
+    width: 100%; 
+    grid-template-columns: 1fr max-content 5fr;
+    grid-template-rows: repeat(4, max-content);
+    grid-template-areas:
+    "footerPattern footerPattern footerPattern"
+    "placeHolder footerGwentLogo footerLinks"
+    "placeHolder footerMail footerAgreements"
+    "placeHolder footerSocials footerYear";
+    gap: 25px 0px;
+    align-items: center; 
+    justify-items: center;
+    align-items: center;
+}
+.footerPattern {
+    grid-area: footerPattern;
+}
+.footerGwentLogo {
+    grid-area: footerGwentLogo;
+}
+.footerMail {
+    grid-area: footerMail;
+}
+.footerSocials {
+    grid-area: footerSocials;
+    display: flex;
+    gap: 10px;
+}
+.iconImg {
+    width: 43px;
+    height: 43px;
+}
+.footerLinks {
+    grid-area: footerLinks;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 0px 55px;
+}
+.footerColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.footerColumn p {
+  font-size: 24px;
+  margin: 0;
+  color: #19a976;
+}
+.footerColumn a {
+  font-size: 16px;
+}
+.footerAgreements {
+    display: flex;
+    grid-area: footerAgreements;
+    gap: 60px;
+}
+.footerYear {
+    grid-area: footerYear;
+}

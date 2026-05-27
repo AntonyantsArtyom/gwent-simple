@@ -1,189 +1,136 @@
 @font-face {
-  font-family: "Title-font";
-  src: url("Assets/ST-Nizhegorodsky.ttf") format("trueType");
+  font-family: 'Title-font';
+  src: url('assets/fonts/ST-Nizhegorodsky.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Content-font-manrope";
-  src: url("Assets/Manrope.ttf") format("trueType");
+  font-family: 'Content-font-manrope';
+  src: url('assets/fonts/Manrope.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Content-font-rubick";
-  src: url("Assets/Rubik-VariableFont_wght.ttf") format("trueType");
+  font-family: 'Content-font-rubick';
+  src: url('assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
 }
 
 .title-text-Nizhegorodsky {
-  font-family: "Title-font", sans-serif;
-  font-size: 60px;
-  line-height: 26px;
-  color: #f4f7fb;
-  text-decoration: none;
+    font-family: 'Title-font', sans-serif;
+    font-size: var(--size, 60px);
+    line-height: 26px;
+    color: #f4f7fb;
+    text-decoration: none;
+    line-height: 1;
 }
 .content-text-manrope {
-  font-family: "Content-font-manrope", sans-serif;
-  font-size: 20px;
-  color: #f4f7fb;
-  text-decoration: none;
+    font-family: 'Content-font-manrope', sans-serif;
+    font-size: var(--size, 20px);
+    color: var(--color,#f4f7fb);
+    text-decoration: none;
 }
 .content-text-rubick {
-  font-family: "Content-font-rubick", sans-serif;
-  font-size: 20px;
-  color: #f4f7fb;
-  text-decoration: none;
-  margin: 2px 0px 2px 0px;
+    font-family: 'Content-font-rubick', sans-serif;
+    font-size: var(--size, 20px);
+    color: var(--color,#f4f7fb);
+    text-decoration: none;
+    margin: 2px 0px 2px 0px;
 }
-.font-size-36 {
-  font-size: 36px;
-}
-
 .button {
-  color: #a4a9a5;
-  position: relative;
+    color: #a4a9a5;
+    position: relative;
 }
 .button:hover {
-  color: #f4f7fb;
-  text-shadow: 0 0 8px rgba(25, 169, 118, 0.6);
+    color: #f4f7fb;
+    text-shadow: 0 0 8px rgba(25, 169, 118, 0.6); 
 }
 .button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-
-  height: 4px;
-  border-radius: 2px;
-
-  background-color: #19a976;
-  transition: width 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 0;
+    
+    height: 4px;
+    border-radius: 2px;
+    
+    background-color: #19a976;
+    transition: width 0.3s ease;
 }
 .button:hover::after {
-  width: 100%;
-  box-shadow:
-    0 0 6px #19a976,
-    0 0 15px rgba(25, 169, 118, 0.8);
+    width: 100%;
+    box-shadow: 
+        0 0 6px #19a976, 
+        0 0 15px rgba(25, 169, 118, 0.8);
+}
+.overlay-element {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: var(--y,100px);
+    left: var(--x,100px);
+    
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.empty-block {
+    height: var(--height,100px);
+    width: var(--width,100px);
 }
 
-.green-text {
-  color: #19a976;
-}
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-
-  background-image: url("Assets/background.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
-
-  background-color: #07120a;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+    background-image: url('assets/home/background.png'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    
+    background-color: #07120a; 
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
-  grid-template-rows: max-content 1fr max-content;
-  grid-template-areas:
+p {
+    text-align: center;
+    max-width: 1340px;
+}
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1400px 1fr;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas:
     "marginLT header marginRT"
     "margiLM main marginRM"
     "marginLB footer marginRB";
 
-  align-items: start;
+    align-items: start;
 }
 
-header {
-  grid-area: header;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-footer {
-  grid-area: footer;
-  display: grid;
-  grid-template-columns: 1fr max-content 5fr;
-  grid-template-rows: repeat(4, max-content);
-  grid-template-areas:
-    "footerPattern footerPattern footerPattern"
-    "placeHolder footerGwentLogo footerLinks"
-    "placeHolder footerMail footerAgreements"
-    "placeHolder footerSocials footerYear";
-  gap: 25px 0px;
-  align-items: center;
-  justify-items: center;
-  align-items: center;
-}
-.footerPattern {
-  grid-area: footerPattern;
-}
-.footerGwentLogo {
-  grid-area: footerGwentLogo;
-}
-.footerMail {
-  grid-area: footerMail;
-}
-.footerSocials {
-  grid-area: footerSocials;
-  display: flex;
-  gap: 0;
-}
-.footerSocials a,
-.footerSocials img {
-  margin: 0 -8px;
-  padding: 0;
-}
-.footerLinks {
-  grid-area: footerLinks;
-  display: grid;
-  grid-template-columns: repeat(4, max-content);
-  gap: 0px 55px;
-}
-.footer-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.footer-column h3 {
-  font-size: 24px;
-  margin: 0;
-  color: #19a976;
-}
-.footer-column a {
-  font-size: 16px;
-}
-.footerTR {
-  grid-area: footerTR;
-}
-.footerAgreements {
-  display: flex;
-  grid-area: footerAgreements;
-  gap: 60px;
-}
-.footerYear {
-  grid-area: footerYear;
-}
 
 .main {
-  grid-area: main;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 124px;
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 124px;
 }
 .content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+.decorated-text-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.partners {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
 }

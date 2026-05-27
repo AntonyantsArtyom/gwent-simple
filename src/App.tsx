@@ -5,6 +5,7 @@ import { Registration } from "./pages/Registration";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { Header } from "./shared/header/Header";
+import { Footer } from "./shared/footer/Footer"
 import { useUserStore } from "./entities/User/model/useUserStore";
 import { useEffect } from "react";
 
@@ -17,15 +18,17 @@ export function App() {
 
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/game/:id" element={<Game />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Navigate to="/home" replace />} />
-      </Routes>
+      <div className="gridContainer">
+        <Header />
+        <Routes>
+          <Route path="/home" element={<><Home /><Footer /></>} />
+          <Route path="/game/:id" element={<Game />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
