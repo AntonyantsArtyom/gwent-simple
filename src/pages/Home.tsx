@@ -59,7 +59,7 @@ export const Home = () => {
                     <img src={pattern3}></img>
                 </div>
                 <img src={indexContent3}></img>
-                <a href="#" className="overlay-element" style={{ '--x': '188px', '--y': '525px' } as React.CSSProperties}><img src={telegramLogo}></img></a>
+                <a href="#" className="overlay-element" style={{ '--x': '100px', '--y': '525px' } as React.CSSProperties}><img src={telegramLogo}></img></a>
                 <a href="#" className="overlay-element" style={{ '--x': '170px', '--y': '525px' } as React.CSSProperties}><img src={discordLogo}></img></a>
                 <a href="#" className="overlay-element" style={{ '--x': '240px', '--y': '525px' } as React.CSSProperties}><img src={vkLogo}></img></a>
             </div>
