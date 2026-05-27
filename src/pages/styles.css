@@ -9,13 +9,6 @@
   grid-template-rows: max-content max-content;
 }
 
-.roomsImage {
-  grid-area: roomsImage;
-  width: 400px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 .line {
   padding-top: 20px;
   grid-area: line;
@@ -68,47 +61,45 @@ body {
   background: #07120a;
 }
 
-.registrationPageContainer {
-  position: relative;
-  height: 100vh;
-
-  display: grid;
-  grid-template-columns: 1fr max-content 1fr;
-  grid-template-rows: 1fr max-content max-content max-content 50px;
-
-  grid-template-areas:
-    ". .........    ."
-    ". roomsImage   ."
-    ". registration ."
-    ". line         ."
-    ". ............ .";
-}
-
 .registationBlock {
-  grid-area: registration;
-
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
 }
 
 .registationBlock > input {
+  width: 250px;
   height: 40px;
   font-size: 18px;
-  border: 1px solid #19a976;
-  border-radius: 8px;
+  border: 1px solid #274c3f;
+  border-radius: 3px;
   background: #1f2326;
-  color: #ffffff;
+  color: #a4a9a5;
   outline: none;
-  padding: 0 10px;
+  padding: 0 16px;
+  gap: 16px;
+  
+  font-family: 'Content-font-rubick', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  color: #A4A9A5;
+}
+.registationBlock > input::placeholder {
+  color: #A4A9A5;
+  opacity: 1;
 }
 
 .registrationBottom {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  color: #f4f7fb;
 }
 
-.registrationBottom > button {
+/*.registrationBottom > button {
   cursor: pointer;
   height: 40px;
   font-size: 18px;
@@ -124,5 +115,5 @@ body {
   cursor: pointer;
   height: 40px;
   font-size: 18px;
-  color: #ffffff;
+  color: #ffffff;*/
 }

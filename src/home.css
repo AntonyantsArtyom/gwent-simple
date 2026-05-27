@@ -14,20 +14,25 @@
 .title-text-Nizhegorodsky {
     font-family: 'Title-font', sans-serif;
     font-size: var(--size, 60px);
+    font-weight: var(--weight, normal);
     line-height: 26px;
-    color: #f4f7fb;
+    color: var(--color,#f4f7fb);
     text-decoration: none;
     line-height: 1;
+    margin: 0;
+    padding: 0; 
 }
 .content-text-manrope {
     font-family: 'Content-font-manrope', sans-serif;
     font-size: var(--size, 20px);
+    font-weight: var(--weight, normal);
     color: var(--color,#f4f7fb);
     text-decoration: none;
 }
 .content-text-rubick {
     font-family: 'Content-font-rubick', sans-serif;
     font-size: var(--size, 20px);
+    font-weight: var(--weight, normal);
     color: var(--color,#f4f7fb);
     text-decoration: none;
     margin: 2px 0px 2px 0px;
@@ -111,20 +116,26 @@ p {
     grid-area: main;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     gap: 124px;
 }
-.content {
+.contentVertical {
     display: flex;
     flex-direction: column;
     gap: 20px;
     position: relative;
 }
+.contentHorizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    position: relative;    
+}
 .decorated-text-container {
     display: flex;
-    gap: 20px;
+    gap: var(--gap-y, 20px) var(--gap-x, 20px); 
     justify-content: center;
     align-items: center;
 }
@@ -133,4 +144,25 @@ p {
     justify-content: center;
     align-items: center;
     gap: 50px;
+}
+
+.roomImage {
+    width: 642px;
+    height: 100vh;
+}
+.greenButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 227px;
+    height: 44px;
+    background-image: url('assets/home/Buttom.svg'); 
+    color: #F4F7FB;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none; 
+    cursor: pointer;
+}
+.cursorPointer {
+    cursor: pointer;
 }

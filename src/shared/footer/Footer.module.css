@@ -3,9 +3,8 @@ footer {
     display: grid;
     width: 100%; 
     grid-template-columns: 1fr max-content 5fr;
-    grid-template-rows: repeat(4, max-content);
+    grid-template-rows: repeat(3, max-content);
     grid-template-areas:
-    "footerPattern footerPattern footerPattern"
     "placeHolder footerGwentLogo footerLinks"
     "placeHolder footerMail footerAgreements"
     "placeHolder footerSocials footerYear";
@@ -13,9 +12,7 @@ footer {
     align-items: center; 
     justify-items: center;
     align-items: center;
-}
-.footerPattern {
-    grid-area: footerPattern;
+    margin: 0px 0px 170px 0px;
 }
 .footerGwentLogo {
     grid-area: footerGwentLogo;

@@ -1,6 +1,5 @@
 import styles from './Footer.module.css'
 import gwentLogo from "../../assets/home/gwentLogo.png";
-import pattern1 from "../../assets/home/Pattern1.svg";
 import discordIcon from "../../assets/home/DiscordIconCircled.svg";
 import telegramIcon from "../../assets/home/TelegramIconCircled.svg";
 import youtubeIcon from "../../assets/home/YoutubeIconCircled.svg";
@@ -12,7 +11,6 @@ function FooterComponent() {
   return (
         <footer className={styles.footer}>
             <div className={styles.footerPattern}>
-                <img src={pattern1} />
             </div>
             <div className={styles.footerGwentLogo}>
                 <Link to="/"><img src={gwentLogo} /></Link>

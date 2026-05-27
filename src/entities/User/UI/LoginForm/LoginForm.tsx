@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../model/useUserStore";
-import roomsImage from "../../../../assets/rooms.png";
+import roomsImage from "../../../../assets/content/RegistrationContent2.png";
 import bottom from "../../../../assets/bottom.png";
 import line from "../../../../assets/line.png";
 

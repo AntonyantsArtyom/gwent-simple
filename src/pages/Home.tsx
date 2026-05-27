@@ -11,20 +11,19 @@ import logo3 from "../assets/home/partners_logo3.svg"
 import discordLogo from "../assets/home/DiscordIconSquared.svg"
 import telegramLogo from "../assets/home/TelegramIconSquared.svg"
 import vkLogo from "../assets/home/VKIconSquared.svg"
-import buttom from "../assets/home/Buttom.svg";
+import buttom from "../assets/home/ParticipateButtom.svg";
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
   return (
     <>
       <div className="main">
-            <div className="content">
-                <img src={pattern1}/>
+            <div className="contentVertical">
                 <img src={indexContent1}/>
                 <Link to="/not-ready" className="overlay-element" style={{ '--x': '100px', '--y': '493px' } as React.CSSProperties}><img src={buttom}/></Link>
                 <img src={pattern2}/>
             </div>
-            <div className="content">
+            <div className="contentVertical">
                 <div className="decorated-text-container">
                     <img src={pattern3}/>
                     <p className="title-text-Nizhegorodsky">ЭТАПЫ ЧЕМПИОНАТА</p>
@@ -32,7 +31,7 @@ export const Home = () => {
                 </div>
                 <img src={indexContent2}/>
             </div>
-            <div className="content">
+            <div className="contentVertical">
                 <div className="decorated-text-container">
                     <img src={pattern3}/>
                     <p className="title-text-Nizhegorodsky">ОПИСАНИЕ МЕРОПРИЯТИЯ</p>
@@ -41,7 +40,7 @@ export const Home = () => {
                 <p className="content-text-manrope">Новое представление о интересном погружении в сетинг онлайн игры Gwent Master где участники соревнуются в мастерском ведении бояс помощью расклада карт. Каждая карта - отдельный войн со своими характеристиками и способностями. Интересным этап для финалистовбудет попробовать на яву показать свои способности ведения боя на мечах.</p>
                 <img src={pattern1}/>
             </div>
-            <div className="content">
+            <div className="contentVertical">
                 <div className="decorated-text-container">
                     <img src={pattern3}/>
                     <p className="title-text-Nizhegorodsky">НАШИ ПАРТНЁРЫ</p>
@@ -54,7 +53,7 @@ export const Home = () => {
                 </div>
                 <img src={pattern2}/>
             </div>
-            <div className="content">
+            <div className="contentVertical">
                 <div className="decorated-text-container">
                     <img src={pattern3}/>
                     <p className="title-text-Nizhegorodsky">СЛЕДИ ЗА НОВОСТЯМИ</p>
@@ -65,7 +64,8 @@ export const Home = () => {
                 <a href="" className="overlay-element" style={{ '--x': '170px', '--y': '525px' } as React.CSSProperties}><img src={discordLogo}/></a>
                 <a href="" className="overlay-element" style={{ '--x': '240px', '--y': '525px' } as React.CSSProperties}><img src={vkLogo}/></a>
             </div>
-            <div className="empty-block" style={{ '--h': '300px' } as React.CSSProperties} />
+            <div className="empty-block" style={{ '--height': '26px' } as React.CSSProperties} />
+            <img src={pattern1} />
       </div>
     </>
   );

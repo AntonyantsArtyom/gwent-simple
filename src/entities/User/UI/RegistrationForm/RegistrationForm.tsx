@@ -1,7 +1,8 @@
 import { useUserStore } from "../../model/useUserStore";
-import roomsImage from "../../../../assets/rooms.png";
-import bottom from "../../../../assets/bottom.png";
-import line from "../../../../assets/line.png";
+import roomsImage from "../../../../assets/content/RegistrationContent1.png";
+import pattern3 from "../../../../assets/home/small_pattern.svg";
+import pattern4 from "../../../../assets/home/Pattern4.svg";
+import pattern5 from "../../../../assets/home/Pattern5.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -38,39 +39,53 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <div className="registrationPageContainer">
-      <img className="roomsImage" src={roomsImage} />
-      <form className="registationBlock" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Логин" value={loginValue} onChange={(e) => setLoginValue(e.target.value)} disabled={userStore.isLoading} required />
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={passwordValue}
-          onChange={(e) => setPasswordValue(e.target.value)}
-          disabled={userStore.isLoading}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Пароль (повтор)"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          disabled={userStore.isLoading}
-          required
-        />
+    <div className="registrationPageContainer main">
+      <div className="contentVertical">
+        <img src={pattern4}/>
+        <div className="contentHorizontal">
+          <img className="roomsImage" src={roomsImage} />
+          <form className="registationBlock" onSubmit={handleSubmit}>
+            <div className="decorated-text-container">
+              <img src={pattern3}/>
+              <p className="title-text-Nizhegorodsky">МОЖЕТ, ПАРТИЮ В ГВИНТ?</p>
+              <img src={pattern3}/>
+            </div>
+            <div className="empty-block" style={{ '--height': '63px' } as React.CSSProperties} />
+            <input type="text" placeholder="Логин" value={loginValue} onChange={(e) => setLoginValue(e.target.value)} disabled={userStore.isLoading} required />
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={passwordValue}
+              onChange={(e) => setPasswordValue(e.target.value)}
+              disabled={userStore.isLoading}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Пароль (повтор)"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              disabled={userStore.isLoading}
+              required
+            />
 
-        {validationError && <p className="error">{validationError}</p>}
-        {userStore.error && <p className="error">{userStore.error}</p>}
+            {validationError && <p className="error">{validationError}</p>}
+            {userStore.error && <p className="error">{userStore.error}</p>}
 
-        <div className="registrationBottom">
-          <button type="submit" disabled={userStore.isLoading}>
-            {userStore.isLoading ? "Загрузка..." : "регистрация"}
-          </button>
-          <p onClick={() => !userStore.isLoading && navigate("/login")}>есть аккаунт</p>
+            <div className="registrationBottom">
+              <button className="greenButton" type="submit" disabled={userStore.isLoading}>
+                <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>
+                  {userStore.isLoading ? "Загрузка..." : "Зарегестрироваться"}
+                </p>
+              </button>
+              <p onClick={() => !userStore.isLoading && navigate("/login")} className="content-text-manrope cursorPointer" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>или Войти</p>
+
+            </div>
+          </form>
         </div>
-      </form>
-      <img className="line" src={line} />
-      <img className="bottomImage" src={bottom} />
+        <img src={pattern5}/>
+      </div>
+      <div className="empty-block" style={{ '--height': '26px' } as React.CSSProperties} />
     </div>
   );
 };
