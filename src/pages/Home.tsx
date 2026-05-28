@@ -8,6 +8,7 @@ import indexContent3 from "../assets/content/IndexContent3.png";
 import logo1 from "../assets/home/partners_logo1.svg"
 import logo2 from "../assets/home/partners_logo2.svg"
 import logo3 from "../assets/home/partners_logo3.svg"
+import participate from "../assets/home/ParticipateIcon.svg"
 import discordLogo from "../assets/home/DiscordIconSquared.svg"
 import telegramLogo from "../assets/home/TelegramIconSquared.svg"
 import vkLogo from "../assets/home/VKIconSquared.svg"
@@ -19,6 +20,7 @@ export const Home = () => {
             <div className="contentVertical">
                 <img src={indexContent1}/>
                 <button className="greenButton overlay-element" style={{'--y':'493px','--x': '100px'} as React.CSSProperties}>
+                    <img src={participate} />
                     <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>Принять участие</p>
                 </button>
                 <img src={pattern2}/>

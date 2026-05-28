@@ -1,8 +1,8 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
-import bottom from "../assets/bottom.png";
-import line from "../assets/home/Pattern1.svg";
-import roomsImage from "../assets/rooms.png";
+import pattern1 from "../assets/home/Pattern1.svg";
+import pattern2 from "../assets/home/Pattern2.svg";
+import roomsImage from "../assets/content/RoomsContent.png";
 import { useNavigate } from "react-router-dom";
 import { getAllRooms, type Room } from "../api/roomApi";
 
@@ -38,8 +38,8 @@ export const Rooms = () => {
   }
 
   return (
-    <div className="roomsPageContainer">
-      <img className="roomsImage" src={roomsImage} />
+    <div className="roomsPageContainer main">
+      <img className="sizedImage" style={{'--width':'624px','--height':'377px'} as React.CSSProperties} src={roomsImage} alt="rooms" />
       <div className="rooms">
         {rooms.map((room) => {
           const player1Joined = !!room.players.player1;
@@ -78,8 +78,7 @@ export const Rooms = () => {
           );
         })}
       </div>
-      <img className="line" src={line} />
-      <img className="bottomImage" src={bottom} />
+      <img className="line" src={pattern1} />
     </div>
   );
 };
