@@ -126,12 +126,14 @@ p {
     flex-direction: column;
     gap: 20px;
     position: relative;
+    align-items: center;
 }
 .contentHorizontal {
     display: flex;
     flex-direction: row;
     gap: 20px;
     position: relative;    
+    align-items: center;
 }
 .decorated-text-container {
     display: flex;
@@ -146,9 +148,9 @@ p {
     gap: 50px;
 }
 
-.roomImage {
-    width: 642px;
-    height: 100vh;
+.sizedImage {
+    width: var(--width,100%);
+    height: var(--height,100%);
 }
 .greenButton {
     display: inline-flex;
@@ -158,16 +160,10 @@ p {
     width: max-content;
     box-sizing: border-box; 
     padding: 0 32px;
-    
     background-image: url('assets/home/Buttom.svg'); 
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
-    
-    /* ХАК ДЛЯ SVG: Сбрасываем пропорции, чтобы картинка тянулась по X как обычный JPG/PNG */
-    /* (Работает в современных браузерах для фоновых SVG) */
-
-
     background-color: transparent;
     color: #F4F7FB;
     border: none; 

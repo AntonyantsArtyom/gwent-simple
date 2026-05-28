@@ -42,7 +42,7 @@ export const LoginForm = () => {
       <div className="contentVertical">
         <img src={pattern4}/>
         <div className="contentHorizontal">
-          <img className="roomsImage" src={roomsImage} alt="rooms" />
+          <img className="sizedImage" style={{'--width':'721px','--height':'536px'} as React.CSSProperties} src={roomsImage} alt="rooms" />
           <form className="registationBlock" onSubmit={handleSubmit}>
             <div className="decorated-text-container">
               <img src={pattern3}/>

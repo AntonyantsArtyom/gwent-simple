@@ -23,7 +23,7 @@ function FooterComponent() {
                 <a href="" className={styles.iconImg}><img src={telegramIcon} /></a>
                 <a href="" className={styles.iconImg}><img src={youtubeIcon} /></a>
                 <a href="" className={styles.iconImg}><img src={vkIcon} /></a>
-                <Link to="/not-ready" className={styles.iconImg}><img src={maxIcon} /></Link>
+                <Link to="/meme" className={styles.iconImg}><img src={maxIcon} /></Link>
             </div>
             <div className={styles.footerLinks}> 
                 <div className={styles.footerColumn}>

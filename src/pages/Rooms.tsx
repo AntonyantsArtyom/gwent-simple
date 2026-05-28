@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import bottom from "../assets/bottom.png";
-import line from "../assets/line.png";
+import line from "../assets/home/Pattern1.svg";
 import roomsImage from "../assets/rooms.png";
 import { useNavigate } from "react-router-dom";
 import { getAllRooms, type Room } from "../api/roomApi";

@@ -11,7 +11,6 @@ import logo3 from "../assets/home/partners_logo3.svg"
 import discordLogo from "../assets/home/DiscordIconSquared.svg"
 import telegramLogo from "../assets/home/TelegramIconSquared.svg"
 import vkLogo from "../assets/home/VKIconSquared.svg"
-import { Link } from 'react-router-dom';
 
 export const Home = () => {
   return (

@@ -4,6 +4,7 @@ import { Game } from "./pages/Game";
 import { Registration } from "./pages/Registration";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
+import { Meme } from "./pages/Meme";
 import { Header } from "./shared/header/Header";
 import { Footer } from "./shared/footer/Footer"
 import { useUserStore } from "./entities/User/model/useUserStore";
@@ -26,6 +27,7 @@ export function App() {
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/meme" element={<Meme />} />
           <Route path="/" element={<Navigate to="/home" replace />} />
         </Routes>
         <Footer />

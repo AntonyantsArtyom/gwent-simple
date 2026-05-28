@@ -9,11 +9,9 @@
   grid-template-rows: max-content max-content;
 }
 
-.line {
-  padding-top: 20px;
-  grid-area: line;
-  width: 400px;
-  margin: auto;
+.roomsImage {
+    height: 536px;
+    width: 721px;
 }
 
 .bottomImage {
@@ -68,7 +66,6 @@ body {
   align-items: center;
   gap: 16px;
 }
-
 .registationBlock > input {
   width: 250px;
   height: 40px;
@@ -90,30 +87,10 @@ body {
   color: #A4A9A5;
   opacity: 1;
 }
-
 .registrationBottom {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   color: #f4f7fb;
-}
-
-/*.registrationBottom > button {
-  cursor: pointer;
-  height: 40px;
-  font-size: 18px;
-  border: 1px solid #19a976;
-  border-radius: 8px;
-  background: #1f2326;
-  color: #ffffff;
-  outline: none;
-  padding: 0 10px;
-}
-
-.registrationBottom > p {
-  cursor: pointer;
-  height: 40px;
-  font-size: 18px;
-  color: #ffffff;*/
 }
