@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../model/useUserStore";
 import roomsImage from "../../../../assets/content/RegistrationContent2.png";
-import bottom from "../../../../assets/bottom.png";
-import line from "../../../../assets/line.png";
+import pattern3 from "../../../../assets/home/small_pattern.svg";
+import pattern4 from "../../../../assets/home/Pattern4.svg";
+import pattern5 from "../../../../assets/home/Pattern5.svg";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -37,24 +38,37 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="registrationPageContainer">
-      <img className="roomsImage" src={roomsImage} alt="rooms" />
-      <form className="registationBlock" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Логин" value={loginValue} onChange={(e) => setLoginValue(e.target.value)} required />
-        <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} required />
+    <div className="registrationPageContainer main">
+      <div className="contentVertical">
+        <img src={pattern4}/>
+        <div className="contentHorizontal">
+          <img className="roomsImage" src={roomsImage} alt="rooms" />
+          <form className="registationBlock" onSubmit={handleSubmit}>
+            <div className="decorated-text-container">
+              <img src={pattern3}/>
+              <p className="title-text-Nizhegorodsky">С ВОЗВРАЩЕНИЕМ, ПУТНИК</p>
+              <img src={pattern3}/>
+            </div>
+            <div className="empty-block" style={{ '--height': '63px' } as React.CSSProperties} />
+            <input type="text" placeholder="Логин" value={loginValue} onChange={(e) => setLoginValue(e.target.value)} required />
+            <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-        {validationError && <p className="error">{validationError}</p>}
-        {userStore.error && <p className="error">{userStore.error}</p>}
+            {validationError && <p className="error">{validationError}</p>}
+            {userStore.error && <p className="error">{userStore.error}</p>}
 
-        <div className="registrationBottom">
-          <button type="submit" disabled={userStore.isLoading}>
-            {userStore.isLoading ? "Загрузка..." : "войти"}
-          </button>
-          <p onClick={() => navigate("/registration")}>нет аккаунта</p>
+            <div className="registrationBottom">
+              <button className="greenButton" type="submit" disabled={userStore.isLoading}>
+                <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>
+                  {userStore.isLoading ? "Загрузка..." : "Войти"}
+                </p>
+              </button>
+              <p onClick={() => navigate("/registration")} className="content-text-manrope cursorPointer" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>нет аккаунта</p>
+            </div>
+          </form>
         </div>
-      </form>
-      <img className="line" src={line} alt="line" />
-      <img className="bottomImage" src={bottom} alt="bottom" />
+        <img src={pattern5}/>
+      </div>
+      <div className="empty-block" style={{ '--height': '26px' } as React.CSSProperties} />
     </div>
   );
 };

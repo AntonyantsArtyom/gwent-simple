@@ -11,7 +11,6 @@ import logo3 from "../assets/home/partners_logo3.svg"
 import discordLogo from "../assets/home/DiscordIconSquared.svg"
 import telegramLogo from "../assets/home/TelegramIconSquared.svg"
 import vkLogo from "../assets/home/VKIconSquared.svg"
-import buttom from "../assets/home/ParticipateButtom.svg";
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
@@ -20,7 +19,9 @@ export const Home = () => {
       <div className="main">
             <div className="contentVertical">
                 <img src={indexContent1}/>
-                <Link to="/not-ready" className="overlay-element" style={{ '--x': '100px', '--y': '493px' } as React.CSSProperties}><img src={buttom}/></Link>
+                <button className="greenButton overlay-element" style={{'--y':'493px','--x': '100px'} as React.CSSProperties}>
+                    <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>Принять участие</p>
+                </button>
                 <img src={pattern2}/>
             </div>
             <div className="contentVertical">

@@ -43,7 +43,7 @@ export const RegistrationForm = () => {
       <div className="contentVertical">
         <img src={pattern4}/>
         <div className="contentHorizontal">
-          <img className="roomsImage" src={roomsImage} />
+          <img className="roomsImage" src={roomsImage} alt="rooms"/>
           <form className="registationBlock" onSubmit={handleSubmit}>
             <div className="decorated-text-container">
               <img src={pattern3}/>
@@ -79,7 +79,6 @@ export const RegistrationForm = () => {
                 </p>
               </button>
               <p onClick={() => !userStore.isLoading && navigate("/login")} className="content-text-manrope cursorPointer" style={{ '--size': '16px', '--weight': '700' , '--color': '#F4F7FB'} as React.CSSProperties}>или Войти</p>
-
             </div>
           </form>
         </div>

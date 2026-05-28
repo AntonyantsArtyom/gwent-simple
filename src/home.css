@@ -151,17 +151,28 @@ p {
     height: 100vh;
 }
 .greenButton {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 227px;
     height: 44px;
+    width: max-content;
+    box-sizing: border-box; 
+    padding: 0 32px;
+    
     background-image: url('assets/home/Buttom.svg'); 
-    color: #F4F7FB;
-    background-color: transparent;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    
+    /* ХАК ДЛЯ SVG: Сбрасываем пропорции, чтобы картинка тянулась по X как обычный JPG/PNG */
+    /* (Работает в современных браузерах для фоновых SVG) */
+
+
+    background-color: transparent;
+    color: #F4F7FB;
     border: none; 
     cursor: pointer;
+    white-space: nowrap; 
 }
 .cursorPointer {
     cursor: pointer;
