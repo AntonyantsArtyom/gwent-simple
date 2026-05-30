@@ -2,6 +2,7 @@ import type { Card as CardType } from "../../type";
 import { Card } from "../Card/Card";
 
 interface GwentHandProps {
+  className?: string;
   cards: CardType[];
   selectedCardId?: string | null;
   isDisabled?: boolean;
@@ -9,23 +10,12 @@ interface GwentHandProps {
   onCardClick?: (card: CardType) => void;
 }
 
-export function Hand({ cards, selectedCardId, isDisabled = false, isHiddenCards = false, onCardClick }: GwentHandProps) {
-  const handStyle: React.CSSProperties = {
-    width: "100%",
-    minHeight: 220,
-    padding: 16,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    gap: 12,
-    background: "rgba(0, 0, 0, 0.35)",
-    borderTop: "2px solid #5f4728",
-  };
-
+export function Hand({className, cards, selectedCardId, isDisabled = false, isHiddenCards = false, onCardClick }: GwentHandProps) {
   return (
-    <div style={handStyle}>
-      {cards.map((card) => (
+    <div className={className}>
+      {cards.map((card, index) => (
         <Card
+          className={`cardInHand${index + 1}`}
           key={card.id}
           card={card}
           isSelected={!isHiddenCards && selectedCardId === card.id}

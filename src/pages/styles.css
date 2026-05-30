@@ -123,12 +123,12 @@ body {
     ". weather6 . marker6 ."
     ". ........ . ....... .";
 }
-.gameMarkerEnemySiege,
-.gameMarkerEnemyRanged,
-.gameMarkerEnemyMelee,
-.gameMarkerAllyMelee,
-.gameMarkerAllyRanged,
-.gameMarkerAllySiege {
+.gameMarkerEnemysiege,
+.gameMarkerEnemyranged,
+.gameMarkerEnemymelee,
+.gameMarkerAllymelee,
+.gameMarkerAllyranged,
+.gameMarkerAllysiege {
     height: 28px;
     width: 44px;
     display: flex;
@@ -142,32 +142,32 @@ body {
     font-weight: 500;
     padding: 0px 10px 0px 0px;
 }
-.gameMarkerEnemySiege,
-.gameMarkerEnemyRanged,
-.gameMarkerEnemyMelee {
+.gameMarkerEnemysiege,
+.gameMarkerEnemyranged,
+.gameMarkerEnemymelee {
     background-image: url("../assets/home/BattleIcon2.svg");
 }
-.gameMarkerAllyMelee,
-.gameMarkerAllyRanged,
-.gameMarkerAllySiege {
+.gameMarkerAllymelee,
+.gameMarkerAllyranged,
+.gameMarkerAllysiege {
     background-image: url("../assets/home/BattleIcon1.svg");
 }
-.gameMarkerEnemySiege {
+.gameMarkerEnemysiege {
     grid-area: marker1;
 }
-.gameMarkerEnemyRang {
+.gameMarkerEnemyranged {
     grid-area: marker2;
 }
-.gameMarkerEnemyMelee {
+.gameMarkerEnemymelee {
     grid-area: marker3;
 }
-.gameMarkerAllyMelee {
+.gameMarkerAllymelee {
     grid-area: marker4;
 }
-.gameMarkerAllyRang {
+.gameMarkerAllyranged {
     grid-area: marker5;
 }
-.gameMarkerAllySiege {
+.gameMarkerAllysiege {
     grid-area: marker6;
 }
 .weather1,
@@ -197,6 +197,7 @@ body {
 .weather6{
     grid-area: weather6;
 }
+
 .gameField3 {
     display: grid;
     grid-template-columns: 70px 11px 1fr;
@@ -205,7 +206,6 @@ body {
     width: 702px;
     height: 639px;
     grid-template-areas:
-    "....... . ......"
     "leader1 . cards1"
     "....... . ......"
     "leader2 . cards2"
@@ -217,58 +217,68 @@ body {
     "leader5 . cards5"
     "....... . ......"
     "leader6 . cards6"
-    "....... . ......"
 }
-.enemyLeaderSiege {
+.cardInRow {
+    width: 67px;
+    height: 90px;
+    cursor: not-allowed;
+    overflow: scroll;
+}
+.enemyLeadersiege {
     grid-area: leader1;
 }
-.enemyLeaderRange {
+.enemyLeaderranged {
     grid-area: leader2;
 }
-.enemyLeaderMelee {
+.enemyLeadermelee {
     grid-area: leader3;
 }
-.allyLeaderMelee {
+.allyLeadermelee {
     grid-area: leader4;
 }
-.allyLeaderRange {
+.allyLeaderranged {
     grid-area: leader5;
 }
-.allyLeaderSiege {
+.allyLeadersiege {
     grid-area: leader6;
 }
-.enemiesSiege,
-.enemiesRange,
-.enemiesMelee,
-.alliesMelee,
-.alliesRange,
-.alliesSiege {
+.enemiessiege,
+.enemiesranged,
+.enemiesmelee,
+.alliesmelee,
+.alliesranged,
+.alliessiege {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 8px;
 }
-.enemiesSiege {
+.enemiessiege {
     grid-area: cards1;
 }
-.enemiesRange {
+.enemiesranged {
     grid-area: cards2;
 }
-.enemiesMelee {
+.enemiesmelee {
     grid-area: cards3;
 }
-.alliesMelee {
+.alliesmelee {
     grid-area: cards4;
 }
-.alliesRange {
+.alliesranged {
     grid-area: cards5;
 }
-.alliesSiege {
+.alliessiege {
     grid-area: cards6;
+}
+.activeRow {
+    border: 2px solid #19a976;
+    background: rgba(255, 211, 106, 0.12);
 }
 .gameField4 {
     display: grid;
-    grid-template-columns: 2fr max-content 1fr max-content 2fr;
-    grid-template-rows: 2fr max-content 1fr max-content 1fr max-content 1fr max-content 1fr max-content 2fr;
+    grid-template-columns: 22fr 86fr 10fr 88fr 20fr;
+    grid-template-rows: 6fr 122fr 4fr 122fr 4fr 122fr 4fr 122fr 4fr 122fr 6fr;
     background-image: url("../assets/content/BattleContent3.png");
     width: 227px;
     height: 639px;
@@ -284,6 +294,14 @@ body {
     ". ..... . ..... ."
     ". card5 . card10 ."
     ". ..... . ..... .";
+}
+.cardInHand1,.cardInHand6,
+.cardInHand2,.cardInHand7,
+.cardInHand3,.cardInHand8,
+.cardInHand4,.cardInHand9,
+.cardInHand5,.cardInHand10 {
+    width: 87px;
+    height: 121px;
 }
 .cardInHand1 {
     grid-area: card1;

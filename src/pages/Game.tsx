@@ -13,7 +13,6 @@ import frost from "../assets/home/frost.svg"
 import rain from "../assets/home/rain.svg"
 import haze from "../assets/home/haze.svg"
 import clear from "../assets/home/clear.svg"
-import emptyCard from "../assets/home/NoCard.svg"
 
 const ALL_CARDS: CardType[] = [
   { id: "1", name: "Geralt", power: 15, row: "melee" },
@@ -79,13 +78,6 @@ function getSideFromUrl(): PlayerSide {
   const side = params.get("side");
 
   return side === "player2" ? "player2" : "player1";
-}
-
-interface MarkerProps {
-  text: string;
-  imgPath: string;
-  className?: string;
-  style?: React.CSSProperties;
 }
 
 export function Game() {
@@ -207,41 +199,29 @@ export function Game() {
 
   return (
     <div className="main">
+      
+
+
       <div className="contentHorizontal" style={{'--gap-x':'0'} as React.CSSProperties}>
         <img src={leftPart} />
         <div className="gameField2" style={{ '--height': '639px','width': '130px' } as React.CSSProperties}>
-          <p className="gameMarkerEnemySiege">1</p>
+          <p className="gameMarkerEnemysiege">1</p>
           <img className="weather1" src={frost}/>
-          <p className="gameMarkerEnemyRang">2</p>
+          <p className="gameMarkerEnemyranged">2</p>
           <img className="weather2" src={haze}/>
-          <p className="gameMarkerEnemyMelee">3</p>
+          <p className="gameMarkerEnemymelee">3</p>
           <img className="weather3" src={rain}/>
-          <p className="gameMarkerAllyMelee">3</p>
+          <p className="gameMarkerAllymelee">3</p>
           <img className="weather4" src={clear}/>
-          <p className="gameMarkerAllyRang">2</p>
+          <p className="gameMarkerAllyranged">2</p>
           <img className="weather5" src={frost}/>
-          <p className="gameMarkerAllySiege">1</p>
+          <p className="gameMarkerAllysiege">1</p>
           <img className="weather6" src={haze}/>
         </div>
-        <div className="gameField3">
-
-        </div>
+        <Board className='gameField3' board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />
         <img src={pattern6} />
-        <div className="gameField4">
-          <img className="cardInHand1" src={emptyCard} />
-          <img className="cardInHand2" src={emptyCard} />
-          <img className="cardInHand3" src={emptyCard} />
-          <img className="cardInHand4" src={emptyCard} />
-          <img className="cardInHand5" src={emptyCard} />
-          <img className="cardInHand6" src={emptyCard} />
-          <img className="cardInHand7" src={emptyCard} />
-          <img className="cardInHand8" src={emptyCard} />
-          <img className="cardInHand9" src={emptyCard} />
-          <img className="cardInHand10" src={emptyCard} />
-        </div>
+        <Hand className="gameField4" cards={hand} selectedCardId={selectedCardId} onCardClick={handleCardClick} />
       </div>
-      <Board board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />
-      <Hand cards={hand} selectedCardId={selectedCardId} onCardClick={handleCardClick} />
     </div>
   );
 }
