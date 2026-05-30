@@ -124,14 +124,14 @@ p {
 .contentVertical {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--gap-x,20px);
     position: relative;
     align-items: center;
 }
 .contentHorizontal {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: var(--gap-x,20px);
     position: relative;    
     align-items: center;
 }
@@ -141,13 +141,6 @@ p {
     justify-content: center;
     align-items: center;
 }
-.partners {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-}
-
 .sizedImage {
     width: var(--width,100%);
     height: var(--height,100%);

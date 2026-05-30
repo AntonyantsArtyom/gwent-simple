@@ -7,6 +7,14 @@ import { Board } from "../components/Board/Board";
 import { Hand } from "../components/Hand/Hand";
 import { useNavigate } from "react-router-dom";
 
+import leftPart from "../assets/content/BattleContent1.png";
+import pattern6 from "../assets/home/Pattern6.svg";
+import frost from "../assets/home/frost.svg"
+import rain from "../assets/home/rain.svg"
+import haze from "../assets/home/haze.svg"
+import clear from "../assets/home/clear.svg"
+import emptyCard from "../assets/home/NoCard.svg"
+
 const ALL_CARDS: CardType[] = [
   { id: "1", name: "Geralt", power: 15, row: "melee" },
   { id: "2", name: "Triss", power: 7, row: "ranged" },
@@ -71,6 +79,13 @@ function getSideFromUrl(): PlayerSide {
   const side = params.get("side");
 
   return side === "player2" ? "player2" : "player1";
+}
+
+interface MarkerProps {
+  text: string;
+  imgPath: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export function Game() {
@@ -191,99 +206,40 @@ export function Game() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#16120d",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          padding: 12,
-          background: "#0f0b07",
-          color: "#f5ddb0",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "2px solid #5f4728",
-        }}
-      >
-        <div>
-          Room: {roomId} | Side: {side} | Players: {playersCount}/2
-          <span style={{ marginLeft: 16 }}>
-            Счёт: {myScore} - {opponentScore}
-          </span>
-          <span style={{ marginLeft: 16 }}>
-            Сила: {playerPower} - {opponentPower}
-          </span>
+    <div className="main">
+      <div className="contentHorizontal" style={{'--gap-x':'0'} as React.CSSProperties}>
+        <img src={leftPart} />
+        <div className="gameField2" style={{ '--height': '639px','width': '130px' } as React.CSSProperties}>
+          <p className="gameMarkerEnemySiege">1</p>
+          <img className="weather1" src={frost}/>
+          <p className="gameMarkerEnemyRang">2</p>
+          <img className="weather2" src={haze}/>
+          <p className="gameMarkerEnemyMelee">3</p>
+          <img className="weather3" src={rain}/>
+          <p className="gameMarkerAllyMelee">3</p>
+          <img className="weather4" src={clear}/>
+          <p className="gameMarkerAllyRang">2</p>
+          <img className="weather5" src={frost}/>
+          <p className="gameMarkerAllySiege">1</p>
+          <img className="weather6" src={haze}/>
         </div>
+        <div className="gameField3">
 
-        <div style={{ display: "flex", gap: 8 }}>
-          <button
-            type="button"
-            onClick={handlePass}
-            disabled={hasPassed || room?.gameOver}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 6,
-              border: "1px solid #8b6f3e",
-              background: hasPassed ? "#4a3a2a" : "#2b2118",
-              color: hasPassed ? "#8b7355" : "#f5ddb0",
-              cursor: hasPassed || room?.gameOver ? "not-allowed" : "pointer",
-            }}
-          >
-            {hasPassed ? "Пас" : "Пас"}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleResetRoom}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 6,
-              border: "1px solid #8b6f3e",
-              background: "#2b2118",
-              color: "#f5ddb0",
-              cursor: "pointer",
-            }}
-          >
-            Reset
-          </button>
-
-          <button
-            type="button"
-            onClick={handleLeaveRoom}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 6,
-              border: "1px solid #8b6f3e",
-              background: "#2b2118",
-              color: "#f5ddb0",
-              cursor: "pointer",
-            }}
-          >
-            Leave
-          </button>
+        </div>
+        <img src={pattern6} />
+        <div className="gameField4">
+          <img className="cardInHand1" src={emptyCard} />
+          <img className="cardInHand2" src={emptyCard} />
+          <img className="cardInHand3" src={emptyCard} />
+          <img className="cardInHand4" src={emptyCard} />
+          <img className="cardInHand5" src={emptyCard} />
+          <img className="cardInHand6" src={emptyCard} />
+          <img className="cardInHand7" src={emptyCard} />
+          <img className="cardInHand8" src={emptyCard} />
+          <img className="cardInHand9" src={emptyCard} />
+          <img className="cardInHand10" src={emptyCard} />
         </div>
       </div>
-
-      {room?.gameOver && (
-        <div
-          style={{
-            padding: 16,
-            background: room.winner === side ? "#2d4a1e" : room.winner === null ? "#4a4a1e" : "#4a1e1e",
-            color: "#f5ddb0",
-            textAlign: "center",
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-        >
-          {room.winner === side ? "ПОБЕДА!" : room.winner === null ? "НИЧЬЯ!" : "ПОРАЖЕНИЕ!"}
-        </div>
-      )}
-
       <Board board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />
       <Hand cards={hand} selectedCardId={selectedCardId} onCardClick={handleCardClick} />
     </div>
