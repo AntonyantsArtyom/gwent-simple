@@ -102,33 +102,33 @@ body {
     gap: 50px;
 }
 
-.gameField2 {
+
+.gameField3 {
     display: grid;
-    grid-template-columns: 1fr max-content 1fr max-content 1fr;
-    grid-template-rows: 36fr max-content 77fr max-content 77fr max-content 93fr max-content 77fr max-content 77fr max-content 36fr;
-    width: 128px;
+    grid-template-columns: 19px 24px 12px 54px 20px 70px 11px 1fr;
+    grid-template-rows: 100px 5px 100px 5px 100px 20px 100px 5px 100px 5px 100px;
+    background-image: url("../assets/content/BattleContent2.png");
+    width: 831px;
     height: 639px;
     grid-template-areas:
-    ". ........ . ....... ."
-    ". weather1 . marker1 ."
-    ". ........ . ....... ."
-    ". weather2 . marker2 ."
-    ". ........ . ....... ."
-    ". weather3 . marker3 ."
-    ". ........ . ....... ."
-    ". weather4 . marker4 ."
-    ". ........ . ....... ."
-    ". weather5 . marker5 ."
-    ". ........ . ....... ."
-    ". weather6 . marker6 ."
-    ". ........ . ....... .";
+    ". weather1 . marker1 . leader1 . cards1"
+    ". ........ . ....... . ....... . ......"
+    ". weather2 . marker2 . leader2 . cards2"
+    ". ........ . ....... . ....... . ......"
+    ". weather3 . marker3 . leader3 . cards3"
+    ". ........ . ....... . ....... . ......"
+    ". weather4 . marker4 . leader4 . cards4"
+    ". ........ . ....... . ....... . ......"
+    ". weather5 . marker5 . leader5 . cards5"
+    ". ........ . ....... . ....... . ......"
+    ". weather6 . marker6 . leader6 . cards6"
 }
-.gameMarkerEnemysiege,
-.gameMarkerEnemyranged,
-.gameMarkerEnemymelee,
-.gameMarkerAllymelee,
-.gameMarkerAllyranged,
-.gameMarkerAllysiege {
+.gameMarker1,
+.gameMarker2,
+.gameMarker3,
+.gameMarker4,
+.gameMarker5,
+.gameMarker6 {
     height: 28px;
     width: 44px;
     display: flex;
@@ -142,32 +142,32 @@ body {
     font-weight: 500;
     padding: 0px 10px 0px 0px;
 }
-.gameMarkerEnemysiege,
-.gameMarkerEnemyranged,
-.gameMarkerEnemymelee {
+.gameMarker1,
+.gameMarker2,
+.gameMarker3 {
     background-image: url("../assets/home/BattleIcon2.svg");
 }
-.gameMarkerAllymelee,
-.gameMarkerAllyranged,
-.gameMarkerAllysiege {
+.gameMarker4,
+.gameMarker5,
+.gameMarker6 {
     background-image: url("../assets/home/BattleIcon1.svg");
 }
-.gameMarkerEnemysiege {
+.gameMarker1 {
     grid-area: marker1;
 }
-.gameMarkerEnemyranged {
+.gameMarker2 {
     grid-area: marker2;
 }
-.gameMarkerEnemymelee {
+.gameMarker3 {
     grid-area: marker3;
 }
-.gameMarkerAllymelee {
+.gameMarker4 {
     grid-area: marker4;
 }
-.gameMarkerAllyranged {
+.gameMarker5 {
     grid-area: marker5;
 }
-.gameMarkerAllysiege {
+.gameMarker6 {
     grid-area: marker6;
 }
 .weather1,
@@ -196,27 +196,6 @@ body {
 }
 .weather6{
     grid-area: weather6;
-}
-
-.gameField3 {
-    display: grid;
-    grid-template-columns: 70px 11px 1fr;
-    grid-template-rows: 100px 5px 100px 5px 100px 20px 100px 5px 100px 5px 100px;
-    background-image: url("../assets/content/BattleContent2.png");
-    width: 702px;
-    height: 639px;
-    grid-template-areas:
-    "leader1 . cards1"
-    "....... . ......"
-    "leader2 . cards2"
-    "....... . ......"
-    "leader3 . cards3"
-    "....... . ......"
-    "leader4 . cards4"
-    "....... . ......"
-    "leader5 . cards5"
-    "....... . ......"
-    "leader6 . cards6"
 }
 .cardInRow {
     width: 67px;

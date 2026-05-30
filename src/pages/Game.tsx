@@ -9,10 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 import leftPart from "../assets/content/BattleContent1.png";
 import pattern6 from "../assets/home/Pattern6.svg";
-import frost from "../assets/home/frost.svg"
-import rain from "../assets/home/rain.svg"
-import haze from "../assets/home/haze.svg"
-import clear from "../assets/home/clear.svg"
 
 const ALL_CARDS: CardType[] = [
   { id: "1", name: "Geralt", power: 15, row: "melee" },
@@ -204,20 +200,6 @@ export function Game() {
 
       <div className="contentHorizontal" style={{'--gap-x':'0'} as React.CSSProperties}>
         <img src={leftPart} />
-        <div className="gameField2" style={{ '--height': '639px','width': '130px' } as React.CSSProperties}>
-          <p className="gameMarkerEnemysiege">1</p>
-          <img className="weather1" src={frost}/>
-          <p className="gameMarkerEnemyranged">2</p>
-          <img className="weather2" src={haze}/>
-          <p className="gameMarkerEnemymelee">3</p>
-          <img className="weather3" src={rain}/>
-          <p className="gameMarkerAllymelee">3</p>
-          <img className="weather4" src={clear}/>
-          <p className="gameMarkerAllyranged">2</p>
-          <img className="weather5" src={frost}/>
-          <p className="gameMarkerAllysiege">1</p>
-          <img className="weather6" src={haze}/>
-        </div>
         <Board className='gameField3' board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />
         <img src={pattern6} />
         <Hand className="gameField4" cards={hand} selectedCardId={selectedCardId} onCardClick={handleCardClick} />

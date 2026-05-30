@@ -1,4 +1,5 @@
 export type RowType = "melee" | "ranged" | "siege";
+export type WeatherType = "frost" | "haze" | "rain" | "clear"
 
 export interface Card {
   id: string;
