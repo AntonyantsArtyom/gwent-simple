@@ -78,7 +78,7 @@ function GwentBoardRow({className,index,weather=clear, title, cards, isActive = 
       <div className={`${className} ${isActive ? "activeRow" : ""}`} onClick={onClick}>
           {cards.length === 0 ? null : (
             cards.map((card) => (
-                <Card className="cardInRow" key={card.id} card={card} isDisabled />
+                <Card className="card cardInRow" key={card.id} card={card} isDisabled />
             ))
           )}
       </div>

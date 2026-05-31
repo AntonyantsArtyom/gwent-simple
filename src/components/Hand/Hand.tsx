@@ -15,7 +15,7 @@ export function Hand({className, cards, selectedCardId, isDisabled = false, isHi
     <div className={className}>
       {cards.map((card, index) => (
         <Card
-          className={`cardInHand${index + 1}`}
+          className={`card cardInHand${index + 1}`}
           key={card.id}
           card={card}
           isSelected={!isHiddenCards && selectedCardId === card.id}

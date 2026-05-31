@@ -96,6 +96,7 @@ export function Card({className, card, isSelected = false, isDisabled = false, i
   return (
     <button
       className={className}
+      style={cardStyle}
       type="button"
       disabled={isDisabled}
       onClick={handleClick}

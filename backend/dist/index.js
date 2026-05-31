@@ -135,7 +135,7 @@ app.post("/api/rooms/:roomId/join", auth_middleware_js_1.authMiddleware, (req, r
             res.status(400).json({ message: "Invalid side" });
             return;
         }
-        const room = (0, rooms_store_js_1.joinRoom)(roomId, body.side, req.userId);
+        const room = (0, rooms_store_js_1.joinRoom)(roomId, body.side, req.userId, req.userLogin);
         const roomWithStats = {
             ...room,
             playersCount: (0, rooms_store_js_1.getPlayersCountInRoom)(room),

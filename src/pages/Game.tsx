@@ -1,3 +1,5 @@
+import "./Game_styles.css"
+
 import { useMemo, useState, useEffect } from "react";
 import type { Board as BoardType, Card as CardType, RowType } from "../type";
 import { playCardInRoom, resetRoom, joinRoom, leaveRoom, passInRoom, type PlayerSide } from "../api/roomApi";
@@ -7,8 +9,11 @@ import { Board } from "../components/Board/Board";
 import { Hand } from "../components/Hand/Hand";
 import { useNavigate } from "react-router-dom";
 
-import leftPart from "../assets/content/BattleContent1.png";
 import pattern6 from "../assets/home/Pattern6.svg";
+import enemyAvatar from "../assets/home/enemyAvatar.jpg"
+import playerAvatar from "../assets/home/toTest.jpg"
+import heart from "../assets/home/heart_red.svg"
+import noHeart from "../assets/home/heart_grey.svg"
 
 const ALL_CARDS: CardType[] = [
   { id: "1", name: "Geralt", power: 15, row: "melee" },
@@ -53,11 +58,14 @@ const ALL_CARDS: CardType[] = [
   { id: "40", name: "King", power: 14, row: "melee" },
 ];
 
-function shuffleAndDraw(deck: CardType[], count: number): CardType[] {
+function shuffleAndDrawWithDelete(deck: CardType[], count: number, previousHand: CardType[] = []): CardType[] {
   const shuffled = [...deck].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+  console.log("before" , JSON.stringify(previousHand) ,"new" + JSON.stringify(shuffled) , "final" ,[...previousHand, ...shuffled.slice(0, count)])
+  const hand = [...previousHand, ...shuffled.slice(0, count)];
+  deck = deck.filter(card => !hand.find(cardInHand => cardInHand.id === card.id))
+  return hand.slice(0, 10);
 }
-
+ 
 function getRoomIdFromUrl(): number {
   const parts = window.location.pathname.split("/");
   const roomId = Number(parts.at(-1));
@@ -65,7 +73,6 @@ function getRoomIdFromUrl(): number {
   if (Number.isNaN(roomId) || roomId < 0) {
     return 0;
   }
-
   return roomId;
 }
 
@@ -83,7 +90,18 @@ export function Game() {
 
   const { room, isLoading } = useRoomPolling(roomId);
 
-  const [hand, setHand] = useState<CardType[]>(() => shuffleAndDraw(ALL_CARDS, 10));
+  useEffect(() => {
+    if(room?.rounds.length === 0 || room == null){
+      return;
+    }
+
+    setHand(shuffleAndDrawWithDelete(ALL_CARDS, 3, hand))
+  }, [
+    room?.rounds.length
+  ])
+
+
+  const [hand, setHand] = useState<CardType[]>(() => shuffleAndDrawWithDelete(ALL_CARDS, 10));
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [hasJoined, setHasJoined] = useState(false);
 
@@ -164,17 +182,15 @@ export function Game() {
     await passInRoom(roomId, side);
   };
 
-  const handleResetRoom = async () => {
-    await resetRoom(roomId);
-    setHand(shuffleAndDraw(ALL_CARDS, 10));
-    setSelectedCardId(null);
-  };
-
   const handleLeaveRoom = async () => {
     await leaveRoom(roomId, side);
     setHasJoined(false);
     navigate("/rooms");
   };
+
+  const scoreToWin: number = 2;
+  const enemyScore: number = (getSideFromUrl() === 'player2' ? room?.score.player1 : room?.score.player2) ?? 0
+  const playerScore = (getSideFromUrl() === 'player1' ? room?.score.player1 : room?.score.player2) ?? 0
 
   if (isLoading || !board) {
     return (
@@ -195,11 +211,57 @@ export function Game() {
 
   return (
     <div className="main">
-      
-
-
       <div className="contentHorizontal" style={{'--gap-x':'0'} as React.CSSProperties}>
-        <img src={leftPart} />
+        <div className="gameField1">
+          <button
+            className="giveUpButton"
+            type="button"
+            onClick={handleLeaveRoom}
+          >
+            <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '1000' , '--color': '#A4A9A5'} as React.CSSProperties}>[X]</p>
+            <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '600' , '--color': '#F4F7FB'} as React.CSSProperties}>Сдаться</p>
+          </button>
+          <p 
+            className="enemyNick content-text-manrope"
+            style={{ '--size': '20px', '--color': '#F4F7FB'} as React.CSSProperties}
+          >
+            {getSideFromUrl() === 'player2' ? room?.players.player1Nickname : room?.players.player2Nickname}</p>
+          <button
+            className="passButton"
+            type="button"
+            onClick={handlePass}
+            disabled={hasPassed || room?.gameOver}
+            style={{
+              color: hasPassed ? "#8b7355" : "#8b7355",
+              cursor: hasPassed || room?.gameOver ? "not-allowed" : "pointer",
+            }}
+          >
+            <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '1000' , '--color': '#A4A9A5'} as React.CSSProperties}>{hasPassed ? "[Ожидайте]" : "[Space]"}</p>
+            <p className="content-text-manrope" style={{ '--size': '16px', '--weight': '600' , '--color': hasPassed ? '#8b7355' : '#F4F7FB' } as React.CSSProperties}>{hasPassed ? "Спасовали" : "Спасовать"}</p>
+          </button>
+          <img className="enemyAvatar" src={enemyAvatar}/>
+
+
+          <p 
+            className="playerNick content-text-manrope"
+            style={{ '--size': '20px', '--color': '#F4F7FB'} as React.CSSProperties}
+          >{getSideFromUrl() === 'player1' ? room?.players.player1Nickname :room?.players.player2Nickname}</p>
+          <img className="playerAvatar" src={playerAvatar}/>
+
+
+          <div className="enemyScore">
+            {(scoreToWin-playerScore) >= 1 ?  <img src={heart} />:<img src={noHeart} />}
+            {(scoreToWin-playerScore) >= 2 ?  <img src={heart} />:<img src={noHeart} />}
+          </div>
+          <p className="enemyDamage content-text-manrope">{opponentPower}</p>
+
+
+          <div className="playerScore">
+            {(scoreToWin-enemyScore) >= 1 ?  <img src={heart} />:<img src={noHeart} />}
+            {(scoreToWin-enemyScore) >= 2 ?  <img src={heart} />:<img src={noHeart} />}
+          </div>
+          <p className="playerDamage content-text-manrope">{playerPower}</p>
+        </div>
         <Board className='gameField3' board={board} selectedCard={selectedCard} onPlayerRowClick={handlePlayerRowClick} />
         <img src={pattern6} />
         <Hand className="gameField4" cards={hand} selectedCardId={selectedCardId} onCardClick={handleCardClick} />

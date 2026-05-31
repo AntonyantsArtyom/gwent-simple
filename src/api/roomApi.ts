@@ -11,7 +11,9 @@ export interface Room {
   updatedAt: number;
   players: {
     player1: string | null;
+    player1Nickname: string | null;
     player2: string | null;
+    player2Nickname: string | null;
   };
   passed: {
     player1: boolean;

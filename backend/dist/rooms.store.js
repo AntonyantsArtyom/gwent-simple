@@ -30,7 +30,9 @@ function createEmptyRoom(roomId) {
         updatedAt: Date.now(),
         players: {
             player1: null,
+            player1Nickname: null,
             player2: null,
+            player2Nickname: null
         },
         passed: {
             player1: false,
@@ -129,7 +131,7 @@ function resetRoom(roomId) {
 function getAllRooms() {
     return Array.from(rooms.values());
 }
-function joinRoom(roomId, side, userId) {
+function joinRoom(roomId, side, userId, userName) {
     const room = getOrCreateRoom(roomId);
     if (room.players[side]) {
         throw new Error("Side already taken");
@@ -139,6 +141,8 @@ function joinRoom(roomId, side, userId) {
         throw new Error("You are already on the other side");
     }
     room.players[side] = userId;
+    const nicknameSide = side === "player1" ? "player1Nickname" : "player2Nickname";
+    room.players[nicknameSide] = userName;
     room.updatedAt = Date.now();
     return room;
 }

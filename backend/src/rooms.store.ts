@@ -22,7 +22,9 @@ function createEmptyRoom(roomId: number): Room {
     updatedAt: Date.now(),
     players: {
       player1: null,
+      player1Nickname: null,
       player2: null,
+      player2Nickname: null
     },
     passed: {
       player1: false,
@@ -133,7 +135,7 @@ export function getAllRooms(): Room[] {
   return Array.from(rooms.values());
 }
 
-export function joinRoom(roomId: number, side: PlayerSide, userId: string): Room {
+export function joinRoom(roomId: number, side: PlayerSide, userId: string, userName: string): Room {
   const room = getOrCreateRoom(roomId);
 
   if (room.players[side]) {
@@ -146,6 +148,10 @@ export function joinRoom(roomId: number, side: PlayerSide, userId: string): Room
   }
 
   room.players[side] = userId;
+
+  const nicknameSide: "player1Nickname" | "player2Nickname" = side === "player1" ? "player1Nickname" : "player2Nickname";
+  room.players[nicknameSide] = userName;
+
   room.updatedAt = Date.now();
   return room;
 }

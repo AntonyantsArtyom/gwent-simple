@@ -163,7 +163,7 @@ app.post("/api/rooms/:roomId/join", authMiddleware, (req: AuthRequest, res) => {
       return;
     }
 
-    const room = joinRoom(roomId, body.side, req.userId!);
+    const room = joinRoom(roomId, body.side, req.userId!, req.userLogin!);
     const roomWithStats = {
       ...room,
       playersCount: getPlayersCountInRoom(room),
