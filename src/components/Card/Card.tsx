@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Card as CardType } from "../../type";
 
 interface GwentCardProps {
@@ -10,20 +10,49 @@ interface GwentCardProps {
   onClick?: (card: CardType) => void;
 }
 
-export function Card({className, card, isSelected = false, isDisabled = false, isHidden = false, onClick }: GwentCardProps) {
+export function Card({ className, card, isSelected = false, isDisabled = false, isHidden = false, onClick }: GwentCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Флаг: была ли успешно загружена фоновая картинка
+  const [hasImage, setHasImage] = useState<boolean>(false);
+  const [resolvedUrl, setResolvedUrl] = useState<string>("");
+
+  useEffect(() => {
+    try {
+      // Получаем URL картинки от сборщика Vite
+      const imgUrl = new URL(`../../assets/cards/${card.id}.jpg`, import.meta.url).href;
+      
+      if (imgUrl && !imgUrl.endsWith('undefined')) {
+        setResolvedUrl(imgUrl);
+
+        // Проверяем существование файла на диске через JS-объект Image
+        const img = new Image();
+        img.src = imgUrl;
+        
+        img.onload = () => {
+          setHasImage(true); // Картинка успешно загрузилась!
+        };
+        
+        img.onerror = () => {
+          setHasImage(false); // Файла нет на диске (ошибка 404)
+        };
+      } else {
+        setHasImage(false);
+      }
+    } catch (e) {
+      setHasImage(false);
+    }
+  }, [card.id]);
 
   const handleClick = () => {
     if (isDisabled || isHidden) return;
-
     onClick?.(card);
   };
 
-  const cardStyle: React.CSSProperties = {
+  const baseCardStyle: React.CSSProperties = {
     padding: 8,
     border: `2px solid ${isSelected ? "#ffd36a" : "#8b6f3e"}`,
     borderRadius: 8,
-    background: isHidden ? "linear-gradient(135deg, #3a2416, #120b07)" : "linear-gradient(180deg, #2b2118, #14100c)",
     color: "#f5ddb0",
     cursor: isDisabled || isHidden ? "not-allowed" : "pointer",
     position: "relative",
@@ -37,12 +66,27 @@ export function Card({className, card, isSelected = false, isDisabled = false, i
     overflow: "hidden",
   };
 
+  // 1. Стиль без изображения (оригинальный)
+  const cardStyleNoImage: React.CSSProperties = {
+    ...baseCardStyle,
+    background: isHidden ? "linear-gradient(135deg, #3a2416, #120b07)" : "linear-gradient(180deg, #2b2118, #14100c)",
+  };
+
+  // 2. Стиль с изображением (чистый арт)
+  const cardStyleWithImage: React.CSSProperties = {
+    ...baseCardStyle,
+    backgroundImage: `url('${resolvedUrl}'), linear-gradient(180deg, #2b2118, #14100c)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  };
+
   const powerStyle: React.CSSProperties = {
     position: "absolute",
-    top: 8,
-    left: 8,
-    width: 32,
-    height: 32,
+    top: 4,          // Сдвинули ближе к верхнему краю (было 8)
+    left: 4,         // Сдвинули ближе к левому краю (было 8)
+    width: 24,       // Уменьшили диаметр круга (было 32)
+    height: 24,      // Уменьшили диаметр круга (было 32)
     borderRadius: "50%",
     background: "#e8d09b",
     color: "#1b130c",
@@ -50,26 +94,46 @@ export function Card({className, card, isSelected = false, isDisabled = false, i
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 700,
-    fontSize: 18,
+    fontSize: 13,    // Уменьшили размер шрифта цифры (было 18)
+    zIndex: 2, 
   };
 
+  // Плашка под описание карточки
   const contentStyle: React.CSSProperties = {
-    minHeight: 56,
-    padding: 8,
+    position: "absolute",
+    bottom: 4,
+    left: 4,
+    right: 4,
+    // Так как кружок теперь меньше (24px) и отступ меньше (4px),
+    // под верхнюю зону достаточно оставить всего 36px вместо 56px.
+    maxHeight: "calc(100% - 36px)", 
+    padding: 6,
     borderRadius: 6,
-    background: "rgba(0, 0, 0, 0.45)",
+    background: "rgba(0, 0, 0, 0.55)",
+    zIndex: 1,
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    overflow: "hidden",
   };
 
   const nameStyle: React.CSSProperties = {
-    fontSize: 14,
+    fontSize: 12, // Чуть уменьшили для адаптивности маленьких ячеек
     fontWeight: 700,
     lineHeight: 1.2,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   };
 
   const rowStyle: React.CSSProperties = {
-    marginTop: 4,
-    fontSize: 12,
+    marginTop: 2,
+    fontSize: 10, // Чуть уменьшили, чтобы гарантировать разделение строк
     opacity: 0.75,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   };
 
   const hiddenPatternStyle: React.CSSProperties = {
@@ -87,28 +151,38 @@ export function Card({className, card, isSelected = false, isDisabled = false, i
 
   if (isHidden) {
     return (
-      <button type="button" style={cardStyle} disabled>
+      <button type="button" style={cardStyleNoImage} disabled>
         <div style={hiddenPatternStyle}>?</div>
       </button>
     );
   }
 
+  // Если картинка ЕСТЬ — берем стиль с фоном. Если картинки НЕТ — берем стиль с градиентом
+  const currentCardStyle = hasImage ? cardStyleWithImage : cardStyleNoImage;
+
+  // Текст и сила видны ТОЛЬКО на картах без картинок (когда hasImage === false)
+  const isContentVisible = !hasImage;
+
   return (
     <button
       className={className}
-      style={cardStyle}
+      style={currentCardStyle}
       type="button"
       disabled={isDisabled}
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div style={powerStyle}>{card.power}</div>
-
-      <div style={contentStyle}>
-        <div style={nameStyle}>{card.name}</div>
-        <div style={rowStyle}>{card.row}</div>
-      </div>
+      {/* Сила и название рендерятся только если у карты нет картинки */}
+      {isContentVisible && (
+        <>
+          <div style={powerStyle}>{card.power}</div>
+          <div style={contentStyle}>
+            <div style={nameStyle}>{card.name}</div>
+            <div style={rowStyle}>{card.row}</div>
+          </div>
+        </>
+      )}
     </button>
   );
 }
